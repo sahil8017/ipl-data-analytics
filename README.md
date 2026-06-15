@@ -130,11 +130,23 @@ psql -U postgres -d ipl_db -f queries/kpi_queries.sql
 
 ---
 
-## 📊 Power BI Dashboard Implementation
-The Power BI dashboard connects directly to the PostgreSQL database `ipl_db` using **Import Mode** to load the pre-calculated database views. 
+## 📊 Power BI Dashboard & Visual Showcase
 
-### Recommended Pages Layout:
-*   **Overview & Season Trends**: Displays tournament health KPIs (Matches, Runs, Boundaries) and tracks the rise of overall scoring rates from 2008 to 2026.
-*   **Team Performance & Toss Impact**: Wins leaderboard, win-loss breakdown, and charts displaying the exact win bias for teams that win the toss and choose to field.
-*   **Player Statistics**: Leaderboards for the Orange Cap (Runs, Strike Rates) and Purple Cap (Wickets, Economies) with an interactive scatter plot showing batting efficiency.
-*   **Venue Insights**: Highlights scoring differences per stadium and displays chase-friendly venues (e.g., Wankhede, Chinnaswamy) vs. defend-heavy venues (e.g., Chepauk).
+The Power BI dashboard connects directly to the PostgreSQL database `ipl_db` using **Import Mode** to load the pre-calculated database views. The design follows a dark-themed broadcast aesthetic with gold highlight accents.
+
+### 1. Overview & Season Trends
+![IPL Season Trends](PowerBI/screenshots/IPL_d-1.png)
+*Tracks overall tournament health KPIs (Matches, Runs, Boundaries) and the rise of overall scoring rates and boundary volumes from 2008 to 2026.*
+
+### 2. Team Performance & Toss Impact
+![IPL Team Performance](PowerBI/screenshots/IPL_d-2.png)
+*Visualizes wins leaderboards, win-loss comparison, and charts displaying the exact win bias for teams that win the toss and choose to field.*
+
+### 3. Player Statistics
+![IPL Player Stats](PowerBI/screenshots/IPL_d-3.png)
+*Showcases leaderboards for the Orange Cap (Runs, Strike Rates) and Purple Cap (Wickets, Economies) with an interactive scatter plot showing batting efficiency.*
+
+### 4. Venue Insights
+![IPL Venue Insights](PowerBI/screenshots/IPL_d-4.png)
+*Highlights pitch scoring averages (1st vs 2nd innings) and displays chase-friendly venues vs. defend-heavy venues.*
+

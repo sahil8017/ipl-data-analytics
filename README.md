@@ -66,7 +66,9 @@ CREATE TABLE matches (
     result_margin INT,
     player_of_match VARCHAR(100),
     venue VARCHAR(200),
-    city VARCHAR(100)
+    city VARCHAR(100),
+    match_number INT,        -- Regular season match number
+    stage VARCHAR(50)        -- Playoff stage (e.g. 'Final', 'Qualifier 1', 'Eliminator', etc.) or NULL
 );
 ```
 
@@ -98,14 +100,29 @@ CREATE TABLE deliveries (
 
 ## Pre-Compiled Analytical SQL Views
 
-We created 6 target database views to serve as clean data sources for the Power BI report:
+We created 16 target database views to serve as clean data sources for the Power BI report:
 
+### Core Performance Views
 1.  **`vw_team_performance`**: Tracks matches played, wins, losses, and overall win percentages for each team.
 2.  **`vw_orange_cap`**: Lists players with 1,000+ career runs, showing runs, strike rates, matches played, fours, and sixes.
 3.  **`vw_purple_cap`**: Lists bowlers with 50+ career wickets, showing wickets, matches played, and economy rates.
 4.  **`vw_venue_insights`**: Computes average 1st and 2nd innings scores and win ratios (chasing vs. defending) for stadiums with 10+ matches.
 5.  **`vw_season_trends`**: Aggregates runs, boundaries, and run rates year-by-year.
 6.  **`vw_toss_impact`**: Checks match outcomes based on toss decisions.
+
+### Championship & Finals Insights (New!)
+7.  **`vw_finals_summary`**: Aggregates team finals appearances, titles won, titles lost, and overall finals win rates.
+8.  **`vw_champion_league_positions`**: Analyzes the regular-season league stage standings of all champions (showing points, wins, and positions 1-4) to trace championship qualification patterns.
+9.  **`vw_orange_cap_by_season`**: Tracks the Orange Cap winner (highest run-scorer) for each season.
+10. **`vw_purple_cap_by_season`**: Tracks the Purple Cap winner (highest wicket-taker) for each season.
+11. **`vw_finals_target_analysis`**: Analyzes runs set, chased/defended margins, and results in every IPL final.
+
+### Advanced Match Scenarios (New!)
+12. **`vw_highest_powerplay_scores`**: Ranks the highest team scores during the Powerplay (first 6 overs) in IPL history.
+13. **`vw_powerplay_batting_stats`**: Evaluates top Powerplay batters (overs 0-5) by runs, strike rate, and average.
+14. **`vw_powerplay_bowling_stats`**: Evaluates top Powerplay bowlers (overs 0-5) by wickets, economy, and strike rate.
+15. **`vw_death_overs_batting_stats`**: Details top finishing batters (overs 15-19) by runs, strike rate, and average.
+16. **`vw_death_overs_bowling_stats`**: Details top death overs bowlers (overs 15-19) by wickets, economy, and bowling average.
 
 ---
 
@@ -128,6 +145,9 @@ The Power BI dashboard connects directly to your local PostgreSQL instance and i
 ### Page 4: Venue & Match Insights
 ![IPL Venue Insights](PowerBI/screenshots/IPL_d-4.png)
 *Details pitch behavior by looking at average 1st and 2nd innings scores by stadium, and classifies grounds based on their win bias (defend-friendly stadiums like Chepauk vs. chasing-friendly stadiums like Wankhede).*
+
+### Page 5: Championship & Finals Analytics (New!)
+*Analyzes team finals qualification vs titles won, visualizes league-stage rankings of all champions, tracks season-wise Orange and Purple Cap winners, and analyzes historic targets set/defended in finals.*
 
 ---
 

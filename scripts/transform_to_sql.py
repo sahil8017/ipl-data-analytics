@@ -83,7 +83,9 @@ def setup_database():
             result_margin INT,
             player_of_match VARCHAR(100),
             venue VARCHAR(200),
-            city VARCHAR(100)
+            city VARCHAR(100),
+            match_number INT,
+            stage VARCHAR(50)
         );
     """)
     
@@ -212,10 +214,21 @@ def run_etl():
             else:
                 city = "Unknown"
                 
+        # Extract match_number and stage
+        event = info.get("event", {})
+        match_number = event.get("match_number")
+        if match_number is not None:
+            try:
+                match_number = int(match_number)
+            except ValueError:
+                match_number = None
+        stage = event.get("stage")
+
         match_records.append((
             match_id, season, date_str, team1, team2,
             toss_winner, toss_decision, winner, result,
-            result_margin, player_of_match, venue, city
+            result_margin, player_of_match, venue, city,
+            match_number, stage
         ))
         
         # 2. Extract and clean delivery details
@@ -275,7 +288,8 @@ def run_etl():
         INSERT INTO matches (
             match_id, season, date, team1, team2,
             toss_winner, toss_decision, winner, result,
-            result_margin, player_of_match, venue, city
+            result_margin, player_of_match, venue, city,
+            match_number, stage
         ) VALUES %s;
     """
     execute_values(cur, insert_matches_query, match_records)
